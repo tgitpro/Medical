@@ -1,0 +1,77 @@
+
+{% extends "index.html" %}
+
+{% block first %}
+
+<!-- Hero Start -->
+    <div class="container-fluid bg-primary hero-header mb-5">
+        <div class="container text-center">
+            <h3 class="text-white mb-3 ">Doctor Dashboard</h3>
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb justify-content-center mb-0 animated slideInDown">
+                    <li class="breadcrumb-item"><a class="text-white" href="">Home</a></li>
+                    <li class="breadcrumb-item"><a class="text-white" href="">About</a></li>
+                </ol>
+            </nav>
+        </div>
+    </div>
+
+{% endblock %}
+
+{% block second %}
+<!-- Feature Start -->
+    <div class="container-fluid py-5">
+        <div class="container">
+            <form>
+
+            <div class="row ">
+<table class="table table-dark">
+  <thead>
+    <tr>
+      <th scope="col">First Name  :   {{data.fname}}</th>
+        </tr>
+        <tr>
+      <th scope="col">Last Name :   {{data.lname}}</th>
+        </tr>
+    <tr>
+      <th scope="col">Email : {{data.email}}</th>
+        </tr>
+    <tr>
+      <th scope="col">Username : {{data.uname}}</th>
+        </tr>
+    <tr>
+        <th scope="col">Address  </th>
+    </tr>
+    <tr>
+        <td scope="col">House : {{address.line}}</td>
+    </tr>
+    <tr>
+        <td scope="col">City : {{address.city}}</td>
+    </tr>
+    <tr>
+        <td scope="col">State : {{address.state}}</td>
+    </tr>
+    <tr>
+        <td scope="col">Pin : {{address.pincode}}</td>
+    </tr>
+  <tr>
+<th>Profile Picture: <img src="{{ data.propic.url }}" alt="Profile Picture" style="width:100px;height:100px;"></th>
+  </tr>
+  </thead>
+
+</table>
+
+
+            </div>
+                   </form>
+
+        </div>
+    </div>
+    <!-- Feature End -->
+
+
+{% endblock %}
+
+
+
+

@@ -1,0 +1,181 @@
+
+{% extends "index.html" %}
+
+{% block first %}
+
+<!-- Hero Start -->
+    <div class="container-fluid bg-primary hero-header mb-5">
+        <div class="container text-center">
+            <h3 class="text-white mb-3 " id="blogPageHeading">Blog Page</h3>
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb justify-content-center mb-0 animated slideInDown">
+                    <li class="breadcrumb-item"><a class="text-white" href="">Home</a></li>
+                    <li class="breadcrumb-item"><a class="text-white" href="">About</a></li>
+                </ol>
+            </nav>
+        </div>
+    </div>
+
+{% endblock %}
+
+{% block second %}
+<!-- Feature Start -->
+<div class="container-fluid py-5">
+    <div class="row">
+        <div class="col-2">
+            {% if request.session.typeu == 'doctor' %}
+            <table class="table table-dark">
+                <tr>
+                    <th scope="col">
+                        <a class="" id="bform" href="{% url 'blogforms' %}" style="width:100%;color:white;margin-left:30%;">Add New</a>
+                    </th>
+                </tr>
+                <tr>
+                    <th scope="col">
+                        <a class="" id="draftid" href="{% url 'draft-datas' %}" style="width:100%;color:white;margin-left:30%;">Drafts</a>
+
+                    </th>
+                </tr>
+                <tr>
+                    <th scope="col">
+                        <a class="" id="postid" href="{% url 'post-datas' %}" style="width:100%;color:white;margin-left:30%;">Posts</a>
+                    </th>
+                </tr>
+
+            </table>
+            {% else %}
+            <table class="table table-dark">
+
+                     <tr>
+                    <th scope="col">
+                <a id="allblog" href="#" style="width: 100%; color: white; margin-left: 30%;" onclick="loadAllBlogs()">All Blogs</a>
+                    </th>
+                </tr>
+                <tr>
+                    <th scope="col">
+                        <select id="categoryblog" class="form-select" style="background-color:#1c2900;color:white;width:60%; margin-left:30%;border: 1px solid #ccc; border-radius: 5px;">
+
+                        <option value="" selected>Categories</option>
+                        <option value="Mental Health">Mental Health</option>
+                        <option value="Heart Disease">Heart Disease</option>
+                        <option value="Covid19">Covid19</option>
+                        <option value="Immunization">Immunization</option>
+
+                    </select>
+
+                    </th>
+                </tr>
+
+            </table>
+            {% endif %}
+        </div>
+
+        <div class="col-10" style="width:50%;margin-left:18%;">
+            {% for data in dobj %}
+            <div id="Cards">
+               <div class="card mb-3" id="" style="">
+              <img src="{{ data.bimage.url }}" class="card-img-top" alt="..." style="">
+              <div class="card-body">
+                <h5 class="card-title">{{data.btitle}}</h5>
+                <p class="card-text">{{ data.bsummary }}</p>
+                <p class="card-text"><small class="text-body-secondary">{{ data.bcategory }}</small></p>
+              </div>
+            </div>
+            </div>
+            {% endfor %}
+        </div>
+        <div class="col-10" style="width:50%;margin-left:18%;" id="blogsContainer">
+</div>
+
+
+
+<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+
+
+<script>
+    function loadAllBlogs() {
+        $.ajax({
+            url: '/allblogs/',
+            type: 'GET',
+            success: function (data) {
+                displayBlogs(data);
+                 updateHeading('All Blogs');
+            },
+            error: function (error) {
+                console.log(error);
+            }
+        });
+    }
+
+    function updateHeading(newHeading) {
+    $('#blogPageHeading').text(newHeading);
+}
+
+    function truncateSummary(summary, wordLimit) {
+    var words = summary.split(' ');
+
+    if (words.length > wordLimit) {
+        words = words.slice(0, wordLimit);
+        return words.join(' ') + '...';
+    }
+
+    return summary;
+}
+
+
+
+    function displayBlogs(data) {
+    var blogsContainer = $('#blogsContainer');
+    blogsContainer.empty();
+
+    for (var i = 0; i < data.length; i++) {
+        var blog = data[i];
+        var truncatedSummary = truncateSummary(blog.bsummary, 15);
+        var blogHtml = '<div class="card mb-3" id="card' + i + '">';
+        blogHtml += '<img src="' + blog.bimage + '" class="card-img-top" alt="..." style="max-height: 200px; object-fit: cover;">';
+        console.log(blog.bimage,'hello')
+        blogHtml += '<div class="card-body">';
+        blogHtml += '<h5 class="card-title">Title: ' + blog.btitle + '</h5>';
+        blogHtml += '<p class="card-text"> Summary: '+ truncatedSummary + '</p>';
+        blogHtml += '</div></div>';
+        blogsContainer.append(blogHtml);
+    }
+}
+
+    function loadBlogsByCategory(selectedCategory) {
+    $.ajax({
+        url: '/category/' + selectedCategory + '/',
+        type: 'GET',
+        success: function (data) {
+            displayBlogs(data);
+            updateHeading(selectedCategory);
+        },
+        error: function (error) {
+            console.log(error);
+        }
+    });
+}
+
+
+    $('#categoryblog').change(function () {
+        var selectedCategory = $(this).val();
+        loadBlogsByCategory(selectedCategory);
+    });
+
+    $(document).ready(function () {
+        loadBlogsByCategory($('#categoryblog').val());
+    });
+</script>
+
+
+
+
+    <!-- Feature End -->
+
+{% endblock %}
+
+
+
+

@@ -1,0 +1,128 @@
+
+{% extends "index.html" %}
+
+{% block first %}
+
+<!-- Hero Start -->
+    <div class="container-fluid bg-primary hero-header mb-5">
+        <div class="container text-center">
+            <h3 class="text-white mb-3 ">Blog Page</h3>
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb justify-content-center mb-0 animated slideInDown">
+                    <li class="breadcrumb-item"><a class="text-white" href="">Home</a></li>
+                    <li class="breadcrumb-item"><a class="text-white" href="">About</a></li>
+                </ol>
+            </nav>
+        </div>
+    </div>
+
+{% endblock %}
+
+{% block second %}
+<!-- Feature Start -->
+<div class="container-fluid py-5">
+    <div class="row">
+        <!-- Left side: Table -->
+        <div class="col-2">
+            {% if request.session.typeu == 'doctor' %}
+            <table class="table table-dark">
+                <tr>
+                    <th scope="col">
+                        <a class="" id="bform" href="{% url 'blogforms' %}" style="width:100%;color:white;margin-left:30%;">Add New</a>
+                    </th>
+                </tr>
+                <tr>
+                    <th scope="col">
+                        <a class="" id="draftid" href="{% url 'draft-datas' %}" style="width:100%;color:white;margin-left:30%;">Drafts</a>
+
+                    </th>
+                </tr>
+                <tr>
+                    <th scope="col">
+                        <a class="" id="postid" href="{% url 'post-datas' %}" style="width:100%;color:white;margin-left:30%;">Posts</a>
+                    </th>
+                </tr>
+
+            </table>
+            {% else %}
+            <table class="table table-dark">
+
+                <tr>
+                    <th scope="col">
+                        <button type="" class="btn " id="allblogs" style="width:100%;color:white;">All Blogs</button>
+                    </th>
+                </tr>
+                <tr>
+                    <th scope="col">
+                        <button type="" class="btn " id="bcategories" style="width:100%;color:white;">Categories</button>
+                    </th>
+                </tr>
+
+            </table>
+            {% endif %}
+        </div>
+
+        <div class="col-10" style="width:50%;margin-left:18%;">
+
+            <form id="blogForm" method="post" enctype="multipart/form-data" action="{% url 'buploads' %}" style="margin-right:30%;">
+
+                {% csrf_token %}
+
+                <div class="form-group">
+                    <label style="color: black;" >Title</label>
+                    <input type="text" class="form-control" id="btitle" name="btitle" placeholder="Enter Title" style="margin-top:2%;margin-bottom:2%;background-color:#90BC79;color: black;">
+                </div>
+                <div class="form-group">
+                    <label style="color: black;" >Image</label>
+                    <input type="file" class="form-control" id="bimage" name="bimg"  style="margin-top:2%;margin-bottom:2%;background-color:#90BC79;color: black;">
+                </div>
+                <div class="form-group">
+                    <label style="color: black;" >Category</label>
+                    <select name="bcategory" class="form-control" style="margin-top:2%;margin-bottom:2%;background-color:#90BC79;color: black;">
+                        <option value="" >Select</option>
+                        <option value="Mental Health" >Mental Health</option>
+                        <option value="Heart Disease" >Heart Disease</option>
+                        <option value="Covid19" >Covid19</option>
+                        <option value="Immunization" >Immunization</option>
+
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label style="color: black;" >Summary</label>
+                    <textarea class="form-control" id="bsummary" name="bsummary" rows="3" placeholder="Enter blog summary" style="margin-top:2%;margin-bottom:2%;background-color:#90BC79;color: black;"></textarea>
+                </div>
+                <div class="form-group">
+                    <label  style="color: black;">Content</label>
+                    <textarea class="form-control" id="bcontent" name="bcontent" rows="15" placeholder="Enter blog content" style="margin-top:2%;margin-bottom:2%;background-color:#90BC79;color: black;"></textarea>
+                </div>
+                      <div class="form-group form-check" style="margin-top:2%;margin-bottom:2%;background-color:#90BC79;color: black;">
+                <input type="checkbox" name="bstatus" value="False" class="" id="publishCheckbox" style="transform: scale(1.5);width:5%;">
+                <label class="form-check-label" for="publishCheckbox">Save as a draft</label>
+                </div>
+                <button type="submit" id="sbutton" class="btn " style="background-color:black;color:#90BC79;margin-right:2%;">Upload</button>
+
+            </form>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+
+<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+
+
+
+
+
+    <!-- Feature End -->
+
+{% endblock %}
+
+
+
+

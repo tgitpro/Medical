@@ -1,0 +1,115 @@
+{% extends "index.html" %}
+
+{% block first %}
+
+<!-- Hero Start -->
+    <div class="container-fluid bg-primary hero-header mb-5">
+        <div class="container text-center">
+            <h3 class="text-white mb-3 ">Patient Registration</h3>
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb justify-content-center mb-0 animated slideInDown">
+                    <li class="breadcrumb-item"><a class="text-white" href="{% url 'index' %}">Home</a></li>
+                    <li class="breadcrumb-item"><a class="text-white" href="">About</a></li>
+                </ol>
+            </nav>
+        </div>
+    </div>
+
+{% endblock %}
+
+{% block second %}
+<!-- Feature Start -->
+    <div class="py-1" style="background-color:white;margin:auto;">
+            <form method="post" action="{% url 'reg' %}" enctype="multipart/form-data">
+                {% csrf_token %}
+    <div style="margin-left:40%;">
+
+      <input type="text" class="form-control" placeholder="First Name" name="fname" autocomplete="off" style="width:40%;margin-top:2%;background-color:#1c2900;color: white;" >
+
+      <input type="text" class="form-control" placeholder="Last Name" name="lname" autocomplete="off" style="width:40%;margin-top:2%;background-color:#1c2900;color: white;" >
+                <label style=margin-top:2%;">Upload Profile Picture:</label>
+      <input type="file" class="form-control"  name="propic" style="width:40%;margin-top:1%;background-color:#1c2900;color: white;" >
+
+      <input type="text" class="form-control" placeholder="Username" name="uname" autocomplete="off" style="width:40%;margin-top:2%;background-color:#1c2900;color: white;" >
+
+      <input type="email" class="form-control" placeholder="Email" name="mail" autocomplete="off" required style="width:40%;margin-top:2%;background-color:#1c2900;color: white;" >
+
+      <input type="password" class="form-control" placeholder="Password" name="psw" id="password"    oninput="checkPassword()" required style="width:40%;margin-top:2%;background-color:#1c2900;color: white;">
+                <span id="passwordMessage" class="text-danger"></span>
+
+      <input type="password" class="form-control" placeholder="Confirm Password" name="cpsw" id="confirm_password" onblur="checkPasswordMatch()" required style="width:40%;margin-top:2%;background-color:#1c2900;color: white;">
+                    <span id="passwordMatchMessage" class="text-danger"></span><br>
+
+    <label style="">Address:</label>
+        <div style="display: flex; flex-direction: column; width: 40%; margin-top: 1%;">
+
+          <input type="text" class="" placeholder="House : " name="line1" autocomplete="off" style="border:none;background-color:#1c2900;color: white;">
+
+          <input type="text" class="" placeholder="City : " name="city" autocomplete="off" style="border:none;background-color:#1c2900;color: white;">
+
+          <input type="text" class="" placeholder="State : " name="state" autocomplete="off" style="border:none;background-color:#1c2900;color: white;">
+
+          <input type="text" class="" placeholder="Pincode : " name="pincode" autocomplete="off" style="border:none;background-color:#1c2900;color: white;">
+        </div>
+
+        <input type="hidden" name="utype" value="patient" >
+
+                <input type="submit" class="btn btn-secondary"  value="Signup" style="width:40%;margin-top:2%;background-color:#1c2900;color: white;">
+    </div>
+            </form>
+    </div>
+
+
+
+<script>
+    function validatePassword(password) {
+        if (password.length < 8) {
+            return "Password must be at least 8 characters long.";
+        }
+
+        if (!/[A-Z]/.test(password)) {
+            return "Password must contain at least one uppercase letter.";
+        }
+
+        if (!/[a-z]/.test(password)) {
+            return "Password must contain at least one lowercase letter.";
+        }
+
+        if (!/\d/.test(password)) {
+            return "Password must contain at least one digit.";
+        }
+
+        if (!/[!@#$%^&*(),.?":{}|<>]/.test(password)) {
+            return "Password must contain at least one special character.";
+        }
+
+        return "";
+    }
+
+    function checkPassword() {
+        var password = document.getElementById("password").value;
+        var passwordMessageElement = document.getElementById("passwordMessage");
+
+        var validationMessage = validatePassword(password);
+
+        passwordMessageElement.textContent = validationMessage;
+    }
+</script>
+
+<script>
+function checkPasswordMatch() {
+    var password = document.getElementById("password").value;
+    var confirm_password = document.getElementById("confirm_password").value;
+    var messageElement = document.getElementById("passwordMatchMessage");
+
+    if (password !== confirm_password) {
+        messageElement.textContent = "Password and Confirm Password do not match";
+    } else {
+        messageElement.textContent = "";
+    }
+}
+
+</script>
+
+
+{% endblock %}

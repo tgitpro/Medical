@@ -1,0 +1,36 @@
+{% extends "index.html" %}
+
+{% block first %}
+
+    <div class="container-fluid bg-primary hero-header mb-5">
+        <div class="container text-center">
+            <h3 class=" text-white mb-3  ">Login</h3>
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb justify-content-center mb-0 animated slideInDown">
+                    <li class="breadcrumb-item"><a class="text-white" href="{% url 'index' %}">Home</a></li>
+                    <li class="breadcrumb-item"><a class="text-white" href="">About</a></li>
+                </ol>
+            </nav>
+        </div>
+    </div>
+{% endblock %}
+
+{% block second %}
+    <div class=" py-2" style="background-color:white;margin:auto;">
+
+            <form method="post" action="{% url 'login' %}">
+                {% csrf_token %}
+    <div style="margin-left:40%;">
+                {% if error_message %}
+                <p class="error-message text-danger">{{ error_message }}</p>
+                {% endif %}
+      <input type="text" class="form-control mt-2" placeholder="Username" name="uname" autocomplete="off" style="width:40%;background-color:#1c2900;" required>
+      <input type="password" class="form-control mt-2" placeholder="Password" name="psw" style="width:40%;background-color:#1c2900;" required>
+        <div style="margin-left:15%;">
+      <input type="submit" class="btn btn-secondary mt-2" placeholder="Submit" value="Login" style="background-color:#1c2900;">
+        </div>
+    </div>
+            </form>
+    </div>
+
+{% endblock %}
